@@ -49,4 +49,5 @@ inquirer.prompt([
     }
 ]).then(function(answer){
 
+    connection.end();
 })
