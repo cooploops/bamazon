@@ -26,3 +26,18 @@ function displayInventory() {
       console.log(res);
     });
   }
+
+inquirer.prompt([
+    {
+        type:"list",
+        name:"idList",
+        message:"Which product ID would you like to buy?"
+    },
+    {
+        type:"input",
+        name:"quantity",
+        message: "How many of that product would you like to purchase?"
+    }
+]).then(function(answer){
+    
+})
