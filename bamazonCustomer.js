@@ -31,13 +31,22 @@ inquirer.prompt([
     {
         type:"list",
         name:"idList",
-        message:"Which product ID would you like to buy?"
+        message:"Which product ID would you like to buy?",
+        choices:[1,2,3,4,5,6,7,8,9,10]
     },
     {
         type:"input",
         name:"quantity",
-        message: "How many of that product would you like to purchase?"
+        message: "How many of that product would you like to purchase?",
+        validate: function(value){
+            let regExp = /\d+/g
+            if(regExp.test(value) === true){
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 ]).then(function(answer){
-    
+
 })
