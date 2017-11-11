@@ -2,7 +2,7 @@
   "name": "bamazon",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bamazonCustomer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,5 +20,6 @@
     "dotenv": "^4.0.0",
     "inquirer": "^3.3.0",
     "mysql": "^2.15.0"
-  }
+  },
+  "devDependencies": {}
 }
