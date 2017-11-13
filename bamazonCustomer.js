@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const dotenv = require("dotenv");
 dotenv.config();
 
+// environment variables stored inside .env file and used by dotenv package. The .env file was not pushed up to github repo
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -28,7 +29,7 @@ function displayInventory() {
   }
 
 function displayPurchase(answer){
-    connection.query("SELECT price FROM products WHERE?",{item_id: answer.idList},function(err,res){
+    connection.query("SELECT price FROM products WHERE?",{item_id: answer.idList},function(err, res){
         if (err) throw err;
         let total = (answer.quantity * res[0].price);
         console.log("Your total comes to " + total);
@@ -37,34 +38,27 @@ function displayPurchase(answer){
 }
 
 function updateInventory(answer, quantityLeft){
-    // console.log("update " + answer.idList);
-    // console.log("update " + quantityLeft);
-    connection.query("UPDATE products SET ? WHERE ?",[{stock_quantity: quantityLeft},{item_id: answer.idList}],function(err,res){
+    connection.query("UPDATE products SET ? WHERE ?",[{stock_quantity: quantityLeft},{item_id: answer.idList}],function(err, res){
         if (err) throw err;
-        // console.log(res.affectedRows + " product added to cart!");
         displayPurchase(answer)
     });
 }
 
 function checkInventory(answer) {
-    // console.log("check " + answer.idList + " " + answer.quantity);
+    
     connection.query("SELECT stock_quantity FROM products WHERE ?",{item_id: answer.idList}, function(err, res){
         if (err) throw err;
-        // console.log(res[0].stock_quantity);
         if (res[0].stock_quantity < answer.quantity){
-            console.log("Insufficient quantity!");
+            console.log("We don't have that many! You Cray?");
             start();
         } else {
-            // console.log(res[0].stock_quantity);
             var quantLeft = res[0].stock_quantity - answer.quantity;
-            // console.log(quantLeft);
             updateInventory(answer, quantLeft);
         }
     })
 }
 
 function start(){
-    console.log("hit");
     inquirer.prompt([
         {
             type: "input",
@@ -89,7 +83,6 @@ function start(){
             }
         }
     ]).then(function(answer){
-        // console.log(answer);
         checkInventory(answer);
     })
 };
